@@ -1,7 +1,7 @@
 django_mushroom_example
 =======================
 
-This is a example project to show how to use [django-mushroom]().
+This is a example project to show how to use [django-mushroom](https://github.com/DebVortex/django-mushroom "django-mushroom").
 
 Installation
 ------------
