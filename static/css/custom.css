@@ -1,0 +1,29 @@
+body {
+	background-image: url('../img/debut_dark.png');
+}
+
+#content {
+	margin-top: 1.5em;
+	width
+}
+
+#messages {
+	height: 400px;
+	overflow-y: scroll;
+	border: 1px solid #CCCCCC;
+	border-radius: 4px 4px 4px 4px;
+	padding: 1em;
+}
+
+#user-list {
+	height: 441px;
+	overflow-y: scroll;
+	border: 1px solid #CCCCCC;
+	border-radius: 4px 4px 4px 4px;
+	padding: 1em;
+}
+
+#write-form {
+	margin-bottom: -0.2em;
+	margin-top: 1em;
+}

@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load url from future %}
+
+{% block title %}{{ block.super }} - Chat{% endblock %}
+
+{% block js %}{{ block.super}}
+  <script src="{{ STATIC_URL }}js/knockout-2.2.0.js"></script>
+  <script src="{{ STATIC_URL }}js/mushroom.js"></script>
+  <script src="{{ STATIC_URL }}js/chat.js"></script>
+{% endblock %}
+
+{% block content %}
+<div class="well">
+  <h1>MyMushroom Chat-Server</h1>
+  <div id="loading" data-bind="visible: !online()">Loading...</div>
+  <div style="display: none" data-bind="visible: online">
+    <div data-bind="visible: !usernameSet()">
+      <h2>Wählen Sie einen Nutzernamen</h2>
+    </div>
+  </div>
+  <div data-bind="visible: usernameSet">
+    <h2>Aktuelle Diskussion</h2>
+  </div>
+  <div class="pull-right">
+    <strong>Server Time:</strong> <span data-bind="text: server_time"></span>
+  </div>
+</div>
+
+<div data-bind="visible: !usernameSet()">
+  <div class="well">
+    <form class="form-search" id="login-form" data-bind="submit: setUsername">
+      {% csrf_token %}
+      <input type="text" name="username" placeholder="Nutzername" data-bind="value: username, valueUpdate: 'afterkeydown'">
+      <input class="btn btn-success" type="submit" value="Ok" data-bind="enable: username() !== ''">
+    </form>
+  </div>
+</div>
+
+<div data-bind="visible: usernameSet">
+  <div class="row">
+    <div class="span8 well">
+      <div id="messages">
+        <div data-bind="if: messages().length === 0">...</div>
+        <!-- ko foreach: messages -->
+        <div class="message">
+          <strong>&lt;<span class="username" data-bind="text: username"></span>&gt;</strong>:
+          <span class="message" data-bind="text: message"></span>
+        </div>
+        <!-- /ko -->
+      </div>
+
+      <form id="write-form" class="form-search" data-bind="submit: sendMessage">    
+        <input type="text" name="message" data-bind="value: message, valueUpdate: 'afterkeydown'">
+        <input class="btn btn-success" type="submit" value="Send" data-bind="enable: message() !== ''">
+      </form>
+    </div>
+    <div class="span3 well">
+      <div id="user-list">
+        <!-- ko foreach: users -->
+        <div class="users">
+          <strong data-bind="text: username"></strong>
+        </div>
+        <!-- /ko -->
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
