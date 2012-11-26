@@ -1,4 +1,5 @@
 import gevent
+from time import time
 
 from django_mushroom.utils import rpc_function, scheduled_function
 
@@ -91,3 +92,10 @@ def notify_active_users(self):
                         'users',
                         new_user_list
                 )
+
+
+@scheduled_function
+def push_server_time(self):
+    while True:
+        gevent.sleep(1)
+        self.sessions.notify('time', time())
